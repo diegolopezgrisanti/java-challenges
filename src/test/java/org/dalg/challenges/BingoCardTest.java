@@ -18,9 +18,9 @@ public class BingoCardTest {
         {
             String[] card = BingoCard.getCard();
 
-            Set<String> set = new HashSet<String>(Arrays.asList(card));
+            Set<String> set = new HashSet<>(Arrays.asList(card));
 
-            assertTrue(String.format("Card numbers are not unique: %s", String.join(" ",card)), set.size() == card.length);
+            assertEquals(String.format("Card numbers are not unique: %s", String.join(" ", card)), set.size(), card.length);
         }
     }
 
@@ -56,12 +56,14 @@ public class BingoCardTest {
         checkColumn(card, "O", 20, 24, 61, 75);
     }
 
+    @SuppressWarnings("unused")
     private void checkColumn(String[] card, String column, int start, int end, int beginRange, int endRange)
     {
         for (int i=start-1; i<end; i++)
         {
-            int n = Integer.valueOf(card[i].substring(1));
-            assertTrue(String.format("Number should be in range from %d to %d, found: '%s')", beginRange, endRange, card[i]), n >= beginRange && n <= endRange);
+            int n = Integer.parseInt(card[i].substring(1));
+            assertTrue(String.format("Number should be in range from %d to %d, found: '%s')", beginRange, endRange, card[i]),
+                    n >= beginRange && n <= endRange);
         }
     }
 
@@ -76,9 +78,11 @@ public class BingoCardTest {
                 checkColumnOnRandomness(card, "G", 15, 19) +
                 checkColumnOnRandomness(card, "O", 20, 24);
 
-        assertTrue(String.format("Unlikely event: found only %d columns that are in random order.", count), count > 1);
+        assertTrue(String.format("Unlikely event: found only %d columns that are in random order.", count),
+                count > 1);
     }
 
+    @SuppressWarnings("unused")
     private int checkColumnOnRandomness(String[] card, String column, int start, int end)
     {
         int n = 0;
@@ -87,7 +91,7 @@ public class BingoCardTest {
 
         for (int i = start-1; i < end; i++)
         {
-            int n1 = Integer.valueOf(card[i].substring(1));
+            int n1 = Integer.parseInt(card[i].substring(1));
 
             if (n != 0)
             {
